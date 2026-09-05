@@ -1,0 +1,68 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+dist/
+build/
+*.egg
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Database
+data/*.db
+data/*.db-wal
+data/*.db-shm
+
+# Node
+node_modules/
+frontend/node_modules/
+
+# Vite
+frontend/dist/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
+
+# 影像檔案
+桌布/
+桌布v2/
+桌布v3/
+images/
+
+# artist tag backup
+data/artist_tags_backup.json
+
+# 機器本地設定（見 docs/adr/0007-local-machine-config-directory.md）
+local/
+
+# 筆記
+human_doc/
+
+# SKILL
+.agents
+.claude
+.scratch
+CLAUDE.md
+CONTEXT.md
+docs
+
+# outdated
+outdated

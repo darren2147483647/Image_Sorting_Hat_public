@@ -1,0 +1,1280 @@
+/* ============================================================
+   圖像分類帽 — Design System
+   Dark theme with purple/blue gradient accents
+   ============================================================ */
+
+/* === CSS Variables === */
+:root {
+  /* Background colors */
+  --bg-base: #0a0a14;
+  --bg-surface: #12121e;
+  --bg-elevated: #1a1a2e;
+  --bg-hover: #222240;
+  --bg-card: rgba(26, 26, 46, 0.8);
+
+  /* Accent gradients */
+  --accent-primary: #7c3aed;
+  --accent-secondary: #3b82f6;
+  --accent-gradient: linear-gradient(135deg, #7c3aed 0%, #3b82f6 100%);
+  --accent-gradient-hover: linear-gradient(135deg, #8b5cf6 0%, #60a5fa 100%);
+  --accent-soft: rgba(124, 58, 237, 0.15);
+  --accent-soft-border: rgba(124, 58, 237, 0.3);
+
+  /* Text colors */
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-accent: #a78bfa;
+
+  /* Status colors */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
+
+  /* Category colors */
+  --cat-game: #f472b6;
+  --cat-vt: #34d399;
+  --cat-individuals: #fbbf24;
+  --cat-populars: #60a5fa;
+
+  /* Borders & Shadows */
+  --border-color: rgba(148, 163, 184, 0.1);
+  --border-hover: rgba(148, 163, 184, 0.2);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px rgba(124, 58, 237, 0.3);
+
+  /* Glass effect */
+  --glass-bg: rgba(18, 18, 30, 0.7);
+  --glass-blur: blur(20px);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.05);
+
+  /* Typography */
+  --font-sans: 'Inter', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* Border radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Layout */
+  --nav-height: 64px;
+  --sidebar-width: 280px;
+}
+
+/* === Utilities === */
+/* Toggled everywhere via classList.add/remove('hidden') (search bars,
+   pickers, loading states, the lightbox itself). This generic rule was
+   missing -- only `.lightbox.hidden` existed -- so every other `.hidden`
+   toggle in the app never actually hid anything. */
+.hidden {
+  display: none !important;
+}
+
+/* === Reset & Base === */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-base);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-base);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bg-hover);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}
+
+/* === Navigation === */
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  padding: 0 var(--space-xl);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: var(--glass-border);
+  z-index: 100;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-shrink: 0;
+}
+
+.nav-logo {
+  font-size: 28px;
+  filter: drop-shadow(0 0 8px rgba(124, 58, 237, 0.5));
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.nav-title {
+  font-size: 18px;
+  font-weight: 700;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.5px;
+}
+
+.nav-links {
+  display: flex;
+  gap: var(--space-xs);
+  flex: 1;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-base);
+  position: relative;
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+  background: var(--accent-soft);
+}
+
+.nav-link.active {
+  color: var(--text-accent);
+  background: var(--accent-soft);
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: var(--space-md);
+  right: var(--space-md);
+  height: 2px;
+  background: var(--accent-gradient);
+  border-radius: var(--radius-full);
+}
+
+.nav-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.nav-stats {
+  display: flex;
+  gap: var(--space-sm);
+  margin-left: auto;
+}
+
+.stat-pill {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 4px 12px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-soft-border);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+}
+
+.stat-value {
+  font-weight: 700;
+  color: var(--text-accent);
+}
+
+.stat-label {
+  color: var(--text-muted);
+}
+
+/* === Main Content === */
+.main-content {
+  margin-top: var(--nav-height);
+  min-height: calc(100vh - var(--nav-height));
+  padding: var(--space-lg);
+}
+
+/* === Loading Screen === */
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  min-height: 400px;
+  color: var(--text-secondary);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--bg-hover);
+  border-top: 3px solid var(--accent-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* === Page Header === */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 700;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.page-subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-top: var(--space-xs);
+}
+
+/* === Gallery Layout === */
+.gallery-container {
+  display: flex;
+  gap: var(--space-lg);
+}
+
+.gallery-sidebar {
+  width: var(--sidebar-width);
+  flex-shrink: 0;
+}
+
+.gallery-main {
+  flex: 1;
+  min-width: 0;
+}
+
+/* === Search Bar === */
+.search-wrapper {
+  position: relative;
+  margin-bottom: var(--space-lg);
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 16px 12px 44px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  outline: none;
+  transition: all var(--transition-base);
+}
+
+.search-input:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.search-input::placeholder {
+  color: var(--text-muted);
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--text-muted);
+}
+
+.search-suggestions {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 50;
+}
+
+/* Reparented to a direct child of <body> by lightbox.js (not left nested in
+   .lightbox-info) -- .lightbox-info has backdrop-filter for its glass
+   effect, and filter/backdrop-filter/transform on an ancestor creates a new
+   containing block for position:fixed descendants, which would silently trap
+   this element's "fixed" positioning relative to .lightbox-info instead of
+   the viewport and clip it via .lightbox-info's own overflow-y:auto.
+   lightbox.js computes top/left/width from the input's own position each
+   time it's shown. As a sibling of #lightbox (z-index 200) rather than a
+   descendant, it also needs its own z-index above that to render on top of
+   the lightbox instead of behind it -- the shared .search-suggestions
+   z-index:50 was only ever sufficient for descendant positioning. Same
+   applies to the character picker's two suggestion lists (指定角色 and its
+   parent-node field) -- both reparented to <body> for the same reason. */
+#lightbox-artist-picker-suggestions,
+#lightbox-character-picker-suggestions,
+#lightbox-character-parent-suggestions {
+  position: fixed;
+  z-index: 300;
+}
+
+.search-suggestion-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  font-size: 14px;
+}
+
+.search-suggestion-item:hover {
+  background: var(--bg-hover);
+}
+
+/* === Filter Panel === */
+.filter-panel {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+}
+
+.filter-section {
+  margin-bottom: var(--space-md);
+}
+
+.filter-section:last-child {
+  margin-bottom: 0;
+}
+
+.filter-section-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: var(--space-sm);
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 6px var(--space-sm);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.filter-option:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.filter-option.active {
+  background: var(--accent-soft);
+  color: var(--text-accent);
+}
+
+.filter-option .filter-count {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--text-muted);
+  background: var(--bg-hover);
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+}
+
+.filter-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.filter-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
+
+.filter-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-soft-border);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  color: var(--text-accent);
+}
+
+.filter-tag-remove {
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity var(--transition-fast);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.filter-tag-remove:hover {
+  opacity: 1;
+}
+
+/* === Image Grid === */
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-md);
+}
+
+/* === Image Card === */
+.image-card {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  aspect-ratio: 1;
+}
+
+.image-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-soft-border);
+  box-shadow: var(--shadow-glow);
+}
+
+.image-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.image-card:hover img {
+  transform: scale(1.05);
+}
+
+.image-card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--space-sm) var(--space-sm);
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: all var(--transition-base);
+}
+
+.image-card:hover .image-card-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tag-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.tag-badge.character {
+  background: rgba(124, 58, 237, 0.6);
+  color: #e0d4fc;
+}
+
+.tag-badge.franchise {
+  background: rgba(59, 130, 246, 0.6);
+  color: #bfdbfe;
+}
+
+.tag-badge.artist {
+  background: rgba(251, 191, 36, 0.6);
+  color: #fef3c7;
+}
+
+.tag-badge.source {
+  background: rgba(16, 185, 129, 0.3);
+  color: #a7f3d0;
+}
+
+/* === Empty State === */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  padding: var(--space-2xl);
+  text-align: center;
+}
+
+.empty-state-icon {
+  font-size: 64px;
+  opacity: 0.5;
+}
+
+.empty-state-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.empty-state-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  max-width: 400px;
+}
+
+/* === Character Cards === */
+.character-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-md);
+}
+
+.character-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.character-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent-gradient);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.character-card:hover {
+  border-color: var(--accent-soft-border);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.character-card:hover::before {
+  opacity: 1;
+}
+
+.character-card-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+}
+
+.character-card-franchise {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.character-card-stats {
+  display: flex;
+  gap: var(--space-md);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.character-card-stat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.character-card-stat strong {
+  color: var(--text-accent);
+}
+
+/* === Franchise Cards === */
+.franchise-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-md);
+}
+
+.franchise-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.franchise-card:hover {
+  border-color: var(--accent-soft-border);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.franchise-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+}
+
+.franchise-card-name {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.franchise-card-category {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-weight: 500;
+}
+
+.franchise-card-meta {
+  display: flex;
+  gap: var(--space-md);
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* === Scanner Page === */
+.scanner-container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.scanner-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-lg);
+}
+
+.scanner-card-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.input-group {
+  margin-bottom: var(--space-md);
+}
+
+.input-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xs);
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  outline: none;
+  transition: all var(--transition-base);
+}
+
+.input-field:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.input-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: var(--space-xs);
+}
+
+.folder-checkboxes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-sm);
+}
+
+.folder-checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.folder-checkbox:hover {
+  border-color: var(--accent-soft-border);
+}
+
+.folder-checkbox.checked {
+  border-color: var(--accent-primary);
+  background: var(--accent-soft);
+}
+
+.folder-checkbox input[type="checkbox"] {
+  accent-color: var(--accent-primary);
+  width: 16px;
+  height: 16px;
+}
+
+.folder-checkbox-info {
+  flex: 1;
+}
+
+.folder-checkbox-name {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.folder-checkbox-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* === Button === */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--accent-gradient);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+  background: var(--accent-gradient-hover);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-secondary {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-hover);
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+/* === Progress Bar === */
+.progress-container {
+  margin: var(--space-md) 0;
+}
+
+.progress-bar-track {
+  width: 100%;
+  height: 8px;
+  background: var(--bg-hover);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--accent-gradient);
+  border-radius: var(--radius-full);
+  transition: width var(--transition-base);
+  position: relative;
+}
+
+.progress-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-xs);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.progress-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.progress-stat {
+  background: var(--bg-elevated);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  text-align: center;
+}
+
+.progress-stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-accent);
+}
+
+.progress-stat-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* === Lightbox === */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox.hidden {
+  display: none;
+}
+
+.lightbox-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+}
+
+.lightbox-content {
+  /* Column layout: image on top, info below, both counted in the box's own
+     height. max-height (not a fixed height) lets the box stay naturally
+     small for a small image -- it only clamps to 95vh, and only then does
+     flex-shrink kick in, when the image + info would otherwise not fit. */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  max-width: 95vw;
+  max-height: 95vh;
+  z-index: 1;
+}
+
+.lightbox-image-container {
+  position: relative; /* anchors .lightbox-close to the image's own width, not .lightbox-info's */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+}
+
+.lightbox-image {
+  /* A fixed vh cap, not max-height:100% -- percentage heights only resolve
+     reliably against an ancestor with a *definite* height, and
+     .lightbox-content only has max-height (not height), so that chain was
+     unreliable and let the image render at its full natural size instead
+     of being constrained. 65vh leaves guaranteed room below for
+     .lightbox-info (capped at 30vh) plus the gap between them, so the two
+     can never overlap regardless of how the height actually resolves. */
+  max-width: 100%;
+  max-height: 65vh;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 32px;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+  z-index: 10;
+}
+
+.lightbox-close:hover {
+  color: white;
+}
+
+.lightbox-nav {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 32px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  z-index: 10;
+}
+
+.lightbox-nav:hover {
+  background: rgba(124, 58, 237, 0.5);
+  border-color: var(--accent-primary);
+}
+
+.lightbox-prev { left: var(--space-md); }
+.lightbox-next { right: var(--space-md); }
+
+.lightbox-info {
+  /* Normal flow now (was absolutely offset below .lightbox-content, which
+     is what let it overlap the image) -- .lightbox-content's column layout
+     already centers this horizontally and stacks it below the image.
+     max-height + overflow-y is a floor for the image's min-height above:
+     even with an unusually long tag list, this panel can't grow past 30vh
+     and eat into the image's guaranteed 20vh. */
+  flex-shrink: 0;
+  max-height: 30vh;
+  overflow-y: auto;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md) var(--space-lg);
+  max-width: 600px;
+  width: 90vw;
+}
+
+.lightbox-info h3 {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: var(--space-xs);
+  color: var(--text-primary);
+  word-break: break-all;
+}
+
+.lightbox-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: var(--space-xs);
+}
+
+.lightbox-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  gap: var(--space-md);
+}
+
+/* === Pagination === */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  margin-top: var(--space-xl);
+}
+
+.pagination-btn {
+  padding: 6px 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.pagination-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.pagination-btn.active {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: white;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0 var(--space-sm);
+}
+
+.pagination-jump {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin: 0 var(--space-sm);
+}
+
+.pagination-jump .input-field {
+  padding: 6px 8px;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* === Toast Notifications === */
+.toast-container {
+  position: fixed;
+  top: calc(var(--nav-height) + var(--space-md));
+  right: var(--space-lg);
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  font-size: 13px;
+  animation: slideIn 0.3s ease-out;
+  max-width: 350px;
+}
+
+.toast.success { border-left: 3px solid var(--success); }
+.toast.error { border-left: 3px solid var(--error); }
+.toast.info { border-left: 3px solid var(--info); }
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* === Scan History === */
+.scan-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.scan-history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-elevated);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+}
+
+.scan-history-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.scan-history-status.completed {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--success);
+}
+
+.scan-history-status.failed {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--error);
+}
+
+.scan-history-status.running {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--info);
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .nav-bar {
+    padding: 0 var(--space-md);
+    gap: var(--space-sm);
+  }
+
+  .nav-link span {
+    display: none;
+  }
+
+  .nav-stats {
+    display: none;
+  }
+
+  .gallery-container {
+    flex-direction: column;
+  }
+
+  .gallery-sidebar {
+    width: 100%;
+  }
+
+  .image-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  .folder-checkboxes {
+    grid-template-columns: 1fr;
+  }
+}

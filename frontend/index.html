@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="圖像分類帽 — 動漫二創影像管理工具，智能角色辨識與 Tag 管理系統" />
+    <title>圖像分類帽 — 動漫二創影像管理工具</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="/index.css" />
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav id="main-nav" class="nav-bar">
+        <div class="nav-brand">
+            <span class="nav-logo">🎩</span>
+            <span class="nav-title">圖像分類帽</span>
+        </div>
+        <div class="nav-links">
+            <a href="#/" class="nav-link active" data-page="gallery" id="nav-gallery">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7" rx="1" />
+                    <rect x="14" y="3" width="7" height="7" rx="1" />
+                    <rect x="3" y="14" width="7" height="7" rx="1" />
+                    <rect x="14" y="14" width="7" height="7" rx="1" />
+                </svg>
+                <span>圖片瀏覽</span>
+            </a>
+            <a href="#/characters" class="nav-link" data-page="characters" id="nav-characters">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                </svg>
+                <span>角色管理</span>
+            </a>
+            <a href="#/franchises" class="nav-link" data-page="franchises" id="nav-franchises">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                    <path d="M2 17l10 5 10-5" />
+                    <path d="M2 12l10 5 10-5" />
+                </svg>
+                <span>作品管理</span>
+            </a>
+            <a href="#/individuals" class="nav-link" data-page="individuals" id="nav-individuals">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 19l7-7 3 3-7 7-3-3z" />
+                    <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
+                    <path d="M2 2l7.586 7.586" />
+                    <circle cx="11" cy="11" r="2" />
+                </svg>
+                <span>作者管理</span>
+            </a>
+            <a href="#/scanner" class="nav-link" data-page="scanner" id="nav-scanner">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <path d="M9 12l2 2 4-4" />
+                </svg>
+                <span>掃描導入</span>
+            </a>
+        </div>
+        <div class="nav-stats" id="nav-stats">
+            <div class="stat-pill" id="stat-images">
+                <span class="stat-value">0</span>
+                <span class="stat-label">圖片</span>
+            </div>
+            <div class="stat-pill" id="stat-characters">
+                <span class="stat-value">0</span>
+                <span class="stat-label">角色</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="app-content" class="main-content">
+        <div class="loading-screen" id="loading-screen">
+            <div class="loading-spinner"></div>
+            <p>載入中...</p>
+        </div>
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox hidden">
+        <div class="lightbox-overlay"></div>
+        <div class="lightbox-content">
+            <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="上一張">‹</button>
+            <div class="lightbox-image-container">
+                <button class="lightbox-close" id="lightbox-close" aria-label="關閉">&times;</button>
+                <img id="lightbox-image" class="lightbox-image" src="" alt="" />
+            </div>
+            <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="下一張">›</button>
+            <div class="lightbox-info" id="lightbox-info">
+                <h3 id="lightbox-filename"></h3>
+                <div class="lightbox-tags" id="lightbox-tags"></div>
+                <div class="lightbox-meta" id="lightbox-meta"></div>
+                <div class="lightbox-tag-actions" style="margin-top: var(--space-sm); display: flex; gap: var(--space-sm);">
+                    <button class="btn btn-secondary btn-sm" id="lightbox-assign-character">指定角色</button>
+                    <button class="btn btn-secondary btn-sm" id="lightbox-assign-artist">指定作者</button>
+                    <button class="btn btn-secondary btn-sm" id="lightbox-remove-tracking">移出追蹤</button>
+                </div>
+                <div class="search-wrapper hidden" id="lightbox-character-picker" style="margin-top: var(--space-sm);">
+                    <input type="text" class="search-input" id="lightbox-character-picker-input"
+                           placeholder="搜尋角色..." autocomplete="off" />
+                    <div class="search-suggestions hidden" id="lightbox-character-picker-suggestions"></div>
+                    <input type="text" class="search-input" id="lightbox-character-parent-input"
+                           placeholder="新增角色的父節點（留空預設歸到 characters）" autocomplete="off"
+                           style="margin-top: var(--space-xs);" />
+                    <div class="search-suggestions hidden" id="lightbox-character-parent-suggestions"></div>
+                </div>
+                <div class="search-wrapper hidden" id="lightbox-artist-picker" style="margin-top: var(--space-sm);">
+                    <input type="text" class="search-input" id="lightbox-artist-picker-input"
+                           placeholder="搜尋作者..." autocomplete="off" />
+                    <div class="search-suggestions hidden" id="lightbox-artist-picker-suggestions"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script type="module" src="/src/app.js"></script>
+</body>
+
+</html>
